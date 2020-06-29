@@ -23,5 +23,30 @@ void AMyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	FVector newLocation = GetActorLocation();
+
+	if(newLocation.X >= 338.0f)
+	{
+		plus = false;
+	}
+	
+	if(newLocation.X <= -728.0)
+	{
+		plus = true;
+	}
+
+	if (plus) 
+	{
+		newLocation.X += DeltaTime * speedX;
+	}
+	else
+	{
+		newLocation.X -= DeltaTime * speedX;
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Position is %f"), newLocation.X);
+	UE_LOG(LogTemp, Warning, TEXT("plus is %d"), plus);
+
+	SetActorLocation(newLocation);
 }
 

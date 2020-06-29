@@ -4,26 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "MyActor.generated.h"
+#include "SpwanActor.generated.h"
 
 UCLASS()
-class CMPM121PROJECT_API AMyActor : public AActor
+class CMPM121PROJECT_API ASpwanActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AMyActor();
+	ASpwanActor();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	UPROPERTY(EditAnywhere, Category = "movement")
-	float speedX = 100;
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* SuperMesh;
 
-	bool plus;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
