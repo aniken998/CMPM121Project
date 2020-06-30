@@ -44,9 +44,6 @@ void AMyActor::Tick(float DeltaTime)
 		newLocation.X -= DeltaTime * speedX;
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Position is %f"), newLocation.X);
-	UE_LOG(LogTemp, Warning, TEXT("plus is %d"), plus);
-
 	SetActorLocation(newLocation);
 }
 

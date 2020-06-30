@@ -4,27 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "SpwanActor.generated.h"
+
+#include "SpwanActor.h"
+
+#include "Spwaner.generated.h"
 
 UCLASS()
-class CMPM121PROJECT_API ASpwanActor : public AActor
+class CMPM121PROJECT_API ASpwaner : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ASpwanActor();
+	ASpwaner();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	UStaticMeshComponent* SuperMesh;
+	int SpwanNum = 0;
+
+public:	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<ASpwanActor> MySpwanActor;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void SetRandomLocationAndSize();
-
-
+	void SpwaningActor();
 };
