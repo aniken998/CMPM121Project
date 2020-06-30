@@ -47,9 +47,11 @@ void ASpwanActor::SetRandomLocationAndSize()
 {
 	float size = FMath::RandRange(0.1f, 0.5f);
 
-	float location = FMath::RandRange(-1400.0f, 1400.0f);
+	float locationX = FMath::RandRange(-1400.0f, 1400.0f);
+	float locationY = FMath::RandRange(-1400.0f, 1400.0f);
+
 
 	SuperMesh->SetWorldScale3D(FVector(size));
-	SetActorLocation(FVector(location, location, 1000.0f));
+	SetActorLocation(FVector(locationX, locationY, 1000.0f));
 }
 
