@@ -5,6 +5,8 @@
 
 #include "ConstructorHelpers.h"
 
+#include "SpwanActor.h"
+
 #include "Animation/AnimBlueprint.h"
 
 // Sets default values
@@ -49,13 +51,17 @@ AMyCharacter::AMyCharacter()
 	FollowCamera->bUsePawnControlRotation = false;
 
 	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+
+	Tags.Add(FName(TEXT("Player")));
+
 }
 
 // Called when the game starts or when spawned
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &AMyCharacter::OnOverlapBegin);
 }
 
 // Called every frame
@@ -82,6 +88,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAction("Running", IE_Released, this, &AMyCharacter::StopRunning);
 }
 
+
 void AMyCharacter::MoveForward(float Axis)
 {
 	const FRotator Rotation = Controller->GetControlRotation();
@@ -102,7 +109,14 @@ void AMyCharacter::MoveRight(float Axis)
 
 void AMyCharacter::Running()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	if (powerUp)
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
+	}
+	else
+	{
+		GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	}
 }
 
 void AMyCharacter::StopRunning()
@@ -110,5 +124,24 @@ void AMyCharacter::StopRunning()
 	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
 
 }
+
+void AMyCharacter::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (Cast<ASpwanActor>(OtherActor) != NULL)
+	{
+		OtherActor->Destroy();
+		powerUp = true;
+		if (GetCharacterMovement()->MaxWalkSpeed == 600)
+		{
+			GetCharacterMovement()->MaxWalkSpeed = 1000.0f;
+		}
+	}
+}
+
+
+
+
+
 
 

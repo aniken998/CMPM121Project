@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SphereComponent.h"
+
 #include "SpwanActor.generated.h"
 
 UCLASS()
@@ -15,12 +17,17 @@ public:
 	// Sets default values for this actor's properties
 	ASpwanActor();
 
+	UPROPERTY(VisibleAnywhere)
+	USphereComponent* TriggerSphere;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* SuperMesh;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	UStaticMeshComponent* SuperMesh;
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
