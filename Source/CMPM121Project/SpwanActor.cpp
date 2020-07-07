@@ -41,6 +41,10 @@ void ASpwanActor::BeginPlay()
 void ASpwanActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	if (GetActorLocation().Z < -1000.0f)
+	{
+		Destroy();
+	}
 }
 
 void ASpwanActor::SetRandomLocationAndSize()

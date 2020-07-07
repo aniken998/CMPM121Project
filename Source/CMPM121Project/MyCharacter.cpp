@@ -47,6 +47,8 @@ AMyCharacter::AMyCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 
 	FollowCamera->bUsePawnControlRotation = false;
+
+	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
 }
 
 // Called when the game starts or when spawned
@@ -72,6 +74,12 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AMyCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AMyCharacter::MoveRight);
+
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+
+	PlayerInputComponent->BindAction("Running", IE_Pressed, this, &AMyCharacter::Running);
+	PlayerInputComponent->BindAction("Running", IE_Released, this, &AMyCharacter::StopRunning);
 }
 
 void AMyCharacter::MoveForward(float Axis)
@@ -90,6 +98,17 @@ void AMyCharacter::MoveRight(float Axis)
 
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	AddMovementInput(Direction, Axis);
+}
+
+void AMyCharacter::Running()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+}
+
+void AMyCharacter::StopRunning()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+
 }
 
 

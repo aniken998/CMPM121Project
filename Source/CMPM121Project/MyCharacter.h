@@ -35,6 +35,9 @@ public:
 	void MoveForward(float Axis);
 	void MoveRight(float Axis);
 
+	void Running();
+	void StopRunning();
+
 
 protected:
 	// Called when the game starts or when spawned
